@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import Link from 'next/link'
 import styled, { css } from 'styled-components'
 
 export default function Home() {
@@ -11,6 +12,10 @@ export default function Home() {
   return (
     <div>
       <ImageBg image={bgImage} />
+
+      <Link href="/about" passHref>
+        <a>About</a>
+      </Link>
     </div>
   )
 }
