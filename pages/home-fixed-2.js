@@ -2,21 +2,28 @@ import { useMemo } from 'react'
 import Link from 'next/link'
 import styled, { css } from 'styled-components'
 
-export default function Home() {
-  	const bgImage = useMemo(() => {
+
+export const getServerSideProps =  async (ctx) => {
+
 		const imgs = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg'];
 		const indexImg = Math.floor(Math.random() * imgs.length);
-		return `/${imgs[indexImg]}`;
-	}, []);
+	return { 
+    props: {
+      bgImage: `/${imgs[indexImg]}`
+    }
+  } 
+	
+}
 
 
-  const renderWhere = typeof window === 'undefined' ? 'Sever': 'Client';
+export default function Home(props) {
 
-  console.log(`BgImage on ${renderWhere}`,bgImage);
+  const {bgImage} = props;
+
 
   return (
     <div>
-      <h1>The bgImage are executed on server and client and it generate a different value in each one due Math.random</h1>
+      <h1>We run only once on the server via getServerSide Props. (This will make your page SSR - read more at nextjs)</h1>
       <ImageBg image={bgImage} />
 
       <Link href="/about" passHref>
